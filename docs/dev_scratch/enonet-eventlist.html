@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EONET</title>
+    <style>body { margin: 0; overflow: hidden; }</style>
+</head>
+<body>
+<p>
+    This was basically a JS fiddle. Played with it before deciding if I wanted to use EONET as my use-case.
+    Output was entirely console. You'll see I did a basic bounding box for current locations, but
+    that doesn't always yield much, so that may not (likely will not) be in the final app.
+</p>
+<script type="module">
+    async function fetchEvents(bbox) {
+        //swap the fetchPath declarations below to find out just how chill your neck of the woods has been for the last 5 days!
+        const fetchPath = 'https://eonet.gsfc.nasa.gov/api/v3/events'
+        // const fetchUrl = `${fetchPath}?status=open&limit=20&days=150&bbox=${bbox.join(',')}`;
+        const fetchUrl = `${fetchPath}?status=open&limit=20&days=5`;
+        console.log(fetchUrl)
+        const response = await fetch(fetchUrl);
+        if(response.ok) {
+            console.log((await response.json()).events);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        //added on dom content loaded b/c was going to render
+        //some html, at which point I decided research phase was done enough.
+        let bbox = []
+        const boxSize = 1
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const {latitude, longitude} = position.coords
+                console.log(position.coords.latitude, position.coords.longitude);
+
+                const minLon = longitude - boxSize
+                const maxLat = latitude + boxSize
+
+                const maxLon = longitude + boxSize
+                const minLat = latitude - boxSize
+                bbox = [minLon, maxLat, maxLon, minLat]
+                fetchEvents(bbox)
+            });
+        }
+    })
+</script>
+</body>
+</html>
