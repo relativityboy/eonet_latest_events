@@ -10,9 +10,12 @@ export const fetchEvents = async (): Promise<EONEvent[]> => {
         const rawEventList: EONEventRaw[] = (await response.json()).events;
         const eventList: EONEvent[] = rawEventList.map(item => {
             const categoryName = item.categories.length > 0? item.categories[0].title : ''
-            const dateYMD = item.geometry.length > 0?
-                format(new Date(item.geometry[item.geometry.length - 1].date), 'yyyy-MM-dd') : ''
-            return {...item, categoryName, dateYMD}
+
+            const latestGeometry = item.geometry.length > 0? item.geometry[item.geometry.length - 1] : null
+            const coordinates  = latestGeometry? latestGeometry.coordinates : null;
+            const dateYMD = latestGeometry? format(new Date(latestGeometry.date), 'yyyy-MM-dd') : ''
+
+            return {...item, categoryName, coordinates, dateYMD}
         });
 
         eventList.sort((a, b) => (
