@@ -1,0 +1,38 @@
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.eventItem.header span {
+    font-weight: bold;
+}
+
+.eventItem.header span.category {
+    background:none;
+}
+
+.dateYMD {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.category {
+    background: #f0f0f0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.eventTitle {
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.link a:hover {
+    color: orange;
+}
