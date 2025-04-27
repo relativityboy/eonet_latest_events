@@ -18,7 +18,7 @@ export default function Home() {
     }, [])
   return (
       <div className="pl-5 md:pl-10 pt-5 font-[family-name:var(--font-geist-sans)]">
-        <h1 className="text-4xl">EONET Explorer V.1</h1>
+        <h1 className="text-4xl">EONET Latest Events V.1</h1>
         <EventList eventList={eventList} />
       </div>
   );

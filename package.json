@@ -1,5 +1,5 @@
 {
-  "name": "nasa_eonet_explorer",
+  "name": "eonet_latest_events",
   "version": "1.0",
   "private": true,
   "scripts": {

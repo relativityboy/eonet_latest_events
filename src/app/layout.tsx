@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-    title: "EONET - EXPLORER",
+    title: "EONET - LATEST EVENTS",
     description: "UI to recent Nasa EONET data",
     icons: "/favicon.ico",
 };
