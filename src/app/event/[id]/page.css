@@ -1,0 +1,18 @@
+.eventCategory {
+    background: #f0f0f0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.eventDetails {
+    padding:0.5rem 0;
+}
+
+pre.rawEventJson {
+ background: #eee;
+ margin-right: 1rem;
+}

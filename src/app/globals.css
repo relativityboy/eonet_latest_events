@@ -21,3 +21,19 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+
+.eventCategory {
+  background: #f0f0f0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+a:hover,
+.control:hover {
+  color: orange;
+  cursor: pointer;
+}

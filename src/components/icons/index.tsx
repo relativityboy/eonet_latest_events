@@ -4,3 +4,27 @@ export const LinkIcon = () => {
     </svg>
 
 }
+
+/**
+ * Hand crafted open in new window icon, because my svg skills were rusty.
+ * Normally I favor MaterialUI's icon set.
+ */
+export const NewWindowIcon = () => {
+    return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" stroke="currentColor" width="24" height="24">
+        <g transform="translate(320,40)">
+            <line x1="0" x2="170" y1="0" y2="0" strokeWidth="40"/>
+            <line x1="150" x2="150" y1="-20" y2="165" strokeWidth="40"/>
+        </g>
+        <g transform="translate(-50,50)">
+            <line x1="256" x2="512" y1="256" y2="0" strokeWidth="40"/>
+        </g>
+        <clipPath id="cut-off-upper-right-corner">
+            <rect x="-25" y="200" width="512" height="306" strokeWidth="50" />
+            <rect x="-25" y="-25" width="250" height="450" strokeWidth="50"/>
+        </clipPath>
+        <g transform="translate(56,56)">
+            <rect x="0" y="0" width="400" height="400" fill="transparent" strokeWidth="50"  clipPath="url(#cut-off-upper-right-corner)"/>
+        </g>
+    </svg>
+
+}
