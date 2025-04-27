@@ -1,7 +1,7 @@
 "use client"
 
 import {useEffect, useState} from "react";
-import {fetchEvents} from "@/eonet/api";
+import {fetchEventList} from "@/eonet/api";
 import {EONEvent} from "@/types";
 import {EventList} from "@/components/EventList";
 
@@ -9,7 +9,7 @@ export default function Home() {
     const [eventList, setEventList] = useState<EONEvent[]>([]);
 
     async function getEvents(){
-        const events = await fetchEvents();
+        const events = await fetchEventList();
         setEventList(events)
     }
 

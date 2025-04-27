@@ -17,7 +17,7 @@
     font-size: 0.9rem;
 }
 
-.category {
+.eventCategory {
     background: #f0f0f0;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
@@ -32,7 +32,4 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-.link a:hover {
-    color: orange;
 }

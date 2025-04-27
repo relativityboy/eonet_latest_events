@@ -20,14 +20,14 @@ export const EventList: React.FC<EventListProps> = ({eventList}) => {
         <li className={`eventItem header ${eventItem}`}>
             <span className="dateYMD"><LinkIcon/></span>
             <span className="dateYMD">Updated</span>
-            <span className="category">Category</span>
+            <span className="eventCategory">Category</span>
             <span className="eventTitle hidden sm:grid">Name</span>
         </li>
         {eventList.map(event => (
             <li key={event.id} className={`eventItem ${eventItem}`}>
                 <span className="link"><Link href={`/event/${event.id}`}><LinkIcon/></Link></span>
                 <time className="dateYMD">{event.dateYMD}</time>
-                <span className="category">{event.categoryName}</span>
+                <span className="eventCategory">{event.categoryName}</span>
                 <span className="eventTitle col-span-4 sm:col-span-1">{event.title}</span>
             </li>
         ))

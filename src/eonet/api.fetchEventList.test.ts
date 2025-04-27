@@ -1,8 +1,8 @@
-import { fetchEvents } from '@/eonet/api';
+import { fetchEventList } from '@/eonet/api';
 import {EONEventRaw, EONGeoType} from '@/types';
 import {format} from "date-fns/format";
 
-describe('fetchEvents', () => {
+describe('fetchEventList', () => {
     const mockFetch = jest.fn();
 
     beforeEach(() => {
@@ -11,7 +11,7 @@ describe('fetchEvents', () => {
     });
 
     it('should fetch, transform, sort and return events correctly', async () => {
-        const mockEvents: EONEventRaw[] = [
+        const mockEventList: EONEventRaw[] = [
             {
                 id: '1',
                 title: 'Event One',
@@ -40,10 +40,10 @@ describe('fetchEvents', () => {
 
         mockFetch.mockResolvedValueOnce({
             ok: true,
-            json: async () => ({ events: mockEvents }),
+            json: async () => ({ events: mockEventList }),
         });
 
-        const result = await fetchEvents();
+        const result = await fetchEventList();
 
         expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://eonet.gsfc.nasa.gov/api/v3/events?status=open&limit=20&days=5'
@@ -71,8 +71,10 @@ describe('fetchEvents', () => {
     it('should throw an error if fetch fails', async () => {
         mockFetch.mockResolvedValueOnce({ ok: false });
 
-        await expect(fetchEvents()).rejects.toThrow(
+        await expect(fetchEventList()).rejects.toThrow(
             'Could not fetch events from https://eonet.gsfc.nasa.gov/api/v3/events?status=open&limit=20&days=5'
         );
     });
 });
+
+

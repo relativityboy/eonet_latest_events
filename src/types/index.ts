@@ -7,7 +7,12 @@ export type EONCategory = {
     title: string;
 }
 
-type LonLat = [lon: number, lat: number];
+export type EONSource = {
+    id: string;
+    url: string;
+}
+
+export type LonLat = [lon: number, lat: number];
 
 export type EONGeo = {
     coordinates: LonLat;
@@ -20,6 +25,7 @@ export type EONGeo = {
 export type EONEventRaw = {
     id: string;
     title: string;
+    sources?: EONSource[];
     categories: EONCategory[];
     closed: boolean | null;
     description: string;
