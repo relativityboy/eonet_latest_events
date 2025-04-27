@@ -1,42 +1,17 @@
 'use client'
 
-import {ReactNode, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import {EONEvent, LonLat} from "@/types";
+import {EONEvent} from "@/types";
 import {fetchEvent} from "@/eonet/api";
 import {OsmMap} from "@/components/OsmMap";
 
 
 import './page.css'
-import {NewWindowIcon} from "@/components/icons";
+import {GoogleMapLink} from "@/components/GoogleMapLink";
+import {EventDetailItem} from "@/components/EventDetailItem";
 
-type EventDetailItemProps = {
-    name: string,
-    gridCols?: string,
-    children: ReactNode,
-    onClick?: () => void
-}
-
-const EventDetailItem: React.FC<EventDetailItemProps> = ({name, gridCols="grid-cols-[120px_1fr]", onClick, children}) => {
-    return <li className={`grid gap-4 items-center py-3 border-b border-gray-200 font-[family-name:var(--font-geist-mono)]
-     ${gridCols}`}>
-        {onClick? <span className="control" onClick={onClick}>{name}</span> : <span>{name}</span>}
-        {children? <span>{children}</span> : null}
-    </li>
-}
-
-type GoogleMapLinkProps = {
-    coordinates: LonLat | null;
-}
-
-const GoogleMapLink: React.FC<GoogleMapLinkProps> = ({coordinates}) => {
-    if(!coordinates) {
-        return 'NOT AVAILABLE';
-    }
-    const [lon, lat] = coordinates;
-    return <Link href={`https://www.google.com/maps/@${lat},${lon},1186m`} target="_blank"><NewWindowIcon/></Link>
-}
 
 export default function EventDetail() {
     const [showRaw, setShowRaw] = useState<boolean>(false);
