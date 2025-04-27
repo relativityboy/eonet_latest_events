@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Earth Globe</title>
+    <style>body { margin: 0; overflow: hidden; }</style>
+</head>
+<body>
+<script type="module">
+
+    import * as THREE from 'https://esm.sh/three@0.159.0';
+    import { OrbitControls } from 'https://esm.sh/three-stdlib@2.14.0/controls/OrbitControls.js?deps=three@0.159.0';
+    import { format } from 'https://esm.sh/date-fns@4.1.0';
+
+    const ymdToday = format(new Date(), "yyyy-MM-dd")
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    const initialDistance = 18;
+    controls.enablePan = false;
+    controls.enableZoom = true;
+    controls.minDistance = 7;   // how close you can zoom in
+    controls.maxDistance = 30;
+    controls.rotateSpeed = 1;
+
+    const cam = {
+        min: {
+            speed: 0.05,
+            distance: 7
+        },
+        start: {
+            speed: 0.5,
+            distance: 20
+        }
+    }
+
+    function getZoomSpeedRatio() {
+        const range = cam.start.speed - cam.min.speed;
+        console.log(range)
+        console.log(cam.start.distance - cam.min.distance)
+        return range / (cam.start.distance - cam.min.distance);
+    }
+
+    const zoomSpeedRatio = getZoomSpeedRatio();
+    console.log(zoomSpeedRatio);
+    function calcRotateSpeed(xPrime) {
+        const x = xPrime - 7;
+        // return 0.05 + (x * 0.03461538461);
+        return cam.min.speed + (x * zoomSpeedRatio);
+    }
+
+    const globeRadius = 5;
+    const geometry = new THREE.SphereGeometry(globeRadius, 64, 64);
+    const zoomLevel = 3;
+    const xMax = zoomLevel**2;
+    const yMax = zoomLevel + 1;
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 512 * (xMax + 1); // 2 tiles wide
+    canvas.height = 512 * yMax + 512; // 2 tiles high
+
+    const tiles = []
+
+    for(let x = 0; x <= xMax; x++) {
+        for(let y = 0; y <= yMax; y++) {
+            tiles.push({x, y})
+        }
+    }
+
+    tiles.forEach(tile => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        //use ymdToday where '2025-04-21' is to get the actual current weather images. I picked a prettier day. :)
+        img.src = `https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-04-21/250m/${zoomLevel}/${tile.y}/${tile.x}.jpg`;
+        img.onload = () => {
+            ctx.drawImage(img, tile.x * 512, tile.y * 512 + 100, 512, 512);
+            texture.needsUpdate = true;
+        };
+    });
+
+    const texture = new THREE.CanvasTexture(canvas);
+    const material = new THREE.MeshBasicMaterial({ map: texture });
+
+    const globe = new THREE.Mesh(geometry, material);
+    scene.add(globe);
+
+    camera.position.z = initialDistance;
+    console.log(controls)
+
+    function positionCameraAtHome({ latitude, longitude }) {
+        // Convert lat/lon to 3D Cartesian coordinates on the sphere surface
+        const phi = (90 - latitude) * (Math.PI / 180); // latitude to polar angle
+        const theta = (longitude + 180) * (Math.PI / 180); // longitude to azimuthal angle
+
+        const x = globeRadius * Math.sin(phi) * Math.cos(theta);
+        const y = globeRadius * Math.cos(phi);
+        const z = globeRadius * Math.sin(phi) * Math.sin(theta);
+
+        const cameraDistance = initialDistance;
+        camera.position.set(x, y, z).normalize().multiplyScalar(initialDistance);
+
+        controls.update();
+
+    }
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+
+            console.log(position.coords.latitude, position.coords.longitude);
+            positionCameraAtHome(position.coords);
+        });
+    }
+
+
+    function animate() {
+        requestAnimationFrame(animate);
+        // console.log('controls.getDistance()', controls.getDistance());
+        // console.log('camera.position.z', camera.position.z);
+        // console.log(controls.rotateSpeed, controls.getDistance())
+        controls.rotateSpeed = calcRotateSpeed(controls.getDistance())
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
+</script>
+</body>
+</html>
