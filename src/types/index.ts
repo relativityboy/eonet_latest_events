@@ -12,8 +12,8 @@ type LonLat = [lon: number, lat: number];
 export type EONGeo = {
     coordinates: LonLat;
     date: string;
-    magnitudeUnit: string;
-    magnitudeValue: number;
+    // magnitudeUnit: string; // We don't use this, but it exists in the api.
+    // magnitudeValue: number; // We don't use this, but it exists in the api.
     type: EONGeoType.Point; // Declaring as we only support Point
 }
 
