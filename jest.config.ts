@@ -7,9 +7,7 @@ const createJestConfig = nextJest({
 const config = createJestConfig({
   testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
-    '^@/components/(.*)$': '<rootDir>/components/$1',
-    '^@/app/(.*)$': '<rootDir>/app/$1',
-    '^@/eonet/(.*)$': '<rootDir>/eonet/$1',
+    '^@/(.*)$': '<rootDir>/$1',
   },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
 });

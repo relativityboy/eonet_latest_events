@@ -6,11 +6,10 @@ import Link from "next/link";
 import {EONEvent} from "@/types";
 import {fetchEvent} from "@/eonet/api";
 import {OsmMap} from "@/components/OsmMap";
-
-
-import './page.css'
 import {GoogleMapLink} from "@/components/GoogleMapLink";
 import {EventDetailItem} from "@/components/EventDetailItem";
+
+import './page.css'
 
 
 export default function EventDetail() {
