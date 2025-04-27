@@ -1,16 +1,18 @@
-import type { Config } from 'jest';
-import { pathsToModuleNameMapper } from 'ts-jest';
+import nextJest from 'next/jest';
 
-// Use require(), not import, for JSON
-const { compilerOptions } = require('./tsconfig.json');
+const createJestConfig = nextJest({
+  dir: './',
+});
 
-const config: Config = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  moduleNameMapper: pathsToModuleNameMapper(
-      compilerOptions.paths,
-      { prefix: '<rootDir>/' }
-  ),
-};
+const config = createJestConfig({
+  testEnvironment: 'jest-environment-jsdom',
+  moduleNameMapper: {
+    '^@/components/(.*)$': '<rootDir>/components/$1',
+    '^@/app/(.*)$': '<rootDir>/app/$1',
+    '^@/eonet/(.*)$': '<rootDir>/eonet/$1',
+  },
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
+});
 
-export default config;
+export default config
+// module.exports = createJestConfig(customJestConfig);
