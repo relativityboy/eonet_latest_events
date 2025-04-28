@@ -6,8 +6,8 @@ import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
 import { fromLonLat } from 'ol/proj';
 import OSM from 'ol/source/OSM.js';
-import "ol/ol.css";
 import {LonLat} from "@/types";
+import "ol/ol.css";
 
 type OsmMapProps = {
     center: LonLat

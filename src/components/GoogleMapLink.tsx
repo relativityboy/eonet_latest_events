@@ -1,6 +1,6 @@
+import {NewWindowIcon} from "@/components/icons";
 import {LonLat} from "@/types";
 import Link from "next/link";
-import {NewWindowIcon} from "@/components/icons";
 
 type GoogleMapLinkProps = {
     coordinates: LonLat | null;

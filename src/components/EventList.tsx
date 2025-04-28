@@ -1,10 +1,9 @@
 "use client"
 
-import {EONEvent} from "@/types";
 import Link from "next/link";
-
-import './EventList.css'
 import {LinkIcon} from "@/components/icons";
+import {EONEvent} from "@/types";
+import './EventList.css'
 
 type EventListProps = {
     eventList: EONEvent[]

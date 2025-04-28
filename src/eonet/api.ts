@@ -35,7 +35,6 @@ export const fetchEvent = async (eventId: string) => {
     const response = await fetch(fetchUrl);
     if(response.ok) {
         const rawEvent: EONEventRaw = await response.json()
-        console.log(rawEvent)
         return createEonEventFromRaw(rawEvent)
     } else {
         throw Error(`Could not fetch event ${eventId}`);
