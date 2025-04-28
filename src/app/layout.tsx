@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import {PageTitle, PageTitleProvider} from "@/components/PageTitle";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,9 +28,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased eonet`}
-      >
-        {children}
+        className={`${geistSans.variable} ${geistMono.variable} flex flex-col antialiased eonet h-full px-5 py-5 md:px-10 font-[family-name:var(--font-geist-sans)]`}
+      ><PageTitleProvider>
+          <div className="shrink-0">
+            <PageTitle/>
+          </div>
+          <div className="flex-1">
+              {children}
+          </div>
+      </PageTitleProvider>
       </body>
     </html>
   );
